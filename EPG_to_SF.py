@@ -6,8 +6,6 @@ import platform_wurl
 import os
 import csv
 
-/Platform/GQL/AppIdSecret
-
 class Snowwflake:
 
     def __init__(self, database, config): 
@@ -37,7 +35,7 @@ def getPassword():
             "Username":response["Parameters"][3]["Value"]}
 
     return config
-ddef getParams(path):
+def getParams(path):
     client = boto3.client("ssm", region_name="us-east-1")
     response = client.get_parameters_by_path(Path = path, Recursive=True, WithDecryption = True)
     config = {}
@@ -90,7 +88,7 @@ headers = [
 back = 1
 s3 = boto3.client('s3')
 my_s3_bucket = 'wurl-analytics-2'
-pl = platform_wurl.platform_wurl(getParams("/Platform/GQL/AppIdSecret"))
+pl = platform_wurl.platform_wurl(getParams("/Platform/GQL")['AppIdSecret'])
 now = datetime.now()-timedelta(days=back)
 date = str(now.year).zfill(4)+"-" +str(now.month).zfill(2) +"-" +str(now.day).zfill(2)
 hour = str(now.hour).zfill(2) +"-" +str(now.minute).zfill(2) +"-" +str(now.second).zfill(2)
